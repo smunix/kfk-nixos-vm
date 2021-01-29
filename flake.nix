@@ -13,7 +13,7 @@
               librarySystemDepends = [ rdkafka ];
             });
           qemu-drv = import "${nixpkgs}/nixos" {
-            system = "x86_64-linux";
+            inherit system;
             configuration = { config, pkgs, ...}:
               with pkgs; 
               let username = "authenticator";
