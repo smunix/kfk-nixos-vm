@@ -17,18 +17,7 @@ import Control.Exception (bracket, throwIO)
 import Control.Exception.Base (Exception)
 import Data.Function ((&))
 import Data.Kind (Type)
-import Kafka.Producer
-  ( BrokerAddress,
-    KafkaError,
-    KafkaProducer,
-    ProducePartition (UnassignedPartition),
-    ProducerProperties,
-    ProducerRecord (prKey, prPartition, prTopic, prValue),
-    brokersList,
-    closeProducer,
-    newProducer,
-    produceMessage,
-  )
+import Kafka.Producer (BrokerAddress, KafkaError, KafkaProducer, ProducePartition (UnassignedPartition), ProducerProperties, ProducerRecord (prKey, prPartition, prTopic, prValue), TopicName (TopicName), brokersList, closeProducer, newProducer, produceMessage)
 import qualified Kafka.Producer as Kfk
 import Kafka.Types (BrokerAddress (BrokerAddress))
 
@@ -58,7 +47,7 @@ someFunc = do
       produceMessage
         producer
         Kfk.ProducerRecord
-          { prTopic = "foo",
+          { prTopic = TopicName "foo",
             prPartition = UnassignedPartition,
             prKey = Nothing,
             prValue = Just "Hello, People!"

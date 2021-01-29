@@ -12,6 +12,12 @@
             overrideCabal (callCabal2nix "kfk-sender" ./kfk-sender {}) (o: {
               librarySystemDepends = [ rdkafka ];
             });
+          kfk-reader-drv =
+            with haskellPackages;
+            with haskell.lib;
+            overrideCabal (callCabal2nix "kfk-reader" ./kfk-reader {}) (o: {
+              librarySystemDepends = [ rdkafka ];
+            });
           qemu-drv = import "${nixpkgs}/nixos" {
             inherit system;
             configuration = { config, pkgs, ...}:
@@ -43,6 +49,7 @@
                 environment.systemPackages = [
                   rdkafka
                   kfk-sender-drv
+                  kfk-reader-drv
                   confluent-platform
                   # script
                 ];
