@@ -1,0 +1,22 @@
+cabal-version:       3.0
+name:                kfk-sender
+version:             0.1.0.0
+license-file:        LICENSE
+author:              Providence Salumu
+maintainer:          Providence.Salumu@smunix.com
+extra-source-files:  CHANGELOG.md
+
+library
+  exposed-modules:     MyLib
+  build-depends:       base ^>=4.14.1.0
+                     , Cabal
+                     , hw-kafka-client
+  default-language:    Haskell2010
+
+executable kfk-sender
+  main-is:             Main.hs
+  build-depends:       base ^>=4.14.1.0
+                     , kfk-sender
+                     , hw-kafka-client
+                     , Cabal
+  default-language:    Haskell2010

@@ -1,0 +1,7 @@
+cradle:
+  cabal:
+    - path: "./"
+      component: "lib:kfk-sender"
+
+    - path: "./Main.hs"
+      component: "kfk-sender:exe:kfk-sender"
