@@ -51,6 +51,7 @@
                   kfk-sender
                   kfk-reader
                   confluent-platform
+                  tmux
                   # script
                 ];
 
