@@ -1,0 +1,7 @@
+cradle:
+  cabal:
+    - path: "./"
+      component: "lib:kfk-reader"
+
+    - path: "./Main.hs"
+      component: "kfk-reader:exe:kfk-reader"

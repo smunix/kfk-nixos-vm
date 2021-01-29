@@ -1,4 +1,4 @@
-cabal-version:       3.4
+cabal-version:       3.0
 name:                kfk-reader
 version:             0.1.0.0
 license-file:        LICENSE
@@ -8,10 +8,15 @@ extra-source-files:  CHANGELOG.md
 
 library
   exposed-modules:     MyLib, Main
-  build-depends:       base ^>=4.14.1.0
+  build-depends:       base
+                     , Cabal
+                     , hw-kafka-client
   default-language:    Haskell2010
 
 executable kfk-reader
   main-is:             Main.hs
-  build-depends:       base ^>=4.14.1.0
+  build-depends:       base
+                     , kfk-reader
+                     , Cabal
+                     , hw-kafka-client
   default-language:    Haskell2010
