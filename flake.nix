@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
   inputs.flake-utils.url = "github:numtide/flake-utils/master";
 
   outputs = { self, nixpkgs, flake-utils, ... }:
@@ -43,6 +43,7 @@
                 environment.systemPackages = [
                   rdkafka
                   kfk-sender-drv
+                  confluent-platform
                   # script
                 ];
 
