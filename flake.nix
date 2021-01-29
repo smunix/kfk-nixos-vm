@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.03";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/master";
 
   outputs = { self, nixpkgs }: {
     packages.x86_64-linux = {
@@ -7,6 +7,7 @@
         system = "x86_64-linux";
         configuration = { config, pkgs, ...}:
           let username = "authenticator";
+              ghc = with pkgs; haskell.ghc.packages (h: []);
           in {
             networking.firewall.allowedTCPPorts = [ 3000 ];
 
@@ -16,6 +17,11 @@
                 root.password = "";
                 "${username}".isSystemUser = true;
               };
+            };
+
+            virtualisation = {
+              graphics = false;
+              memorySize = 2048;
             };
           };
       }).vm;
