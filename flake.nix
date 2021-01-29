@@ -74,7 +74,7 @@
                 };
 
                 virtualisation = {
-                  graphics = false;
+                  graphics = true;
                   memorySize = 2048;
                 };
               };

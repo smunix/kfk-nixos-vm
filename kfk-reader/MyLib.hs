@@ -19,7 +19,7 @@ import Control.Exception.Base (Exception)
 import Control.Monad (forever)
 import Data.Function ((&))
 import Data.Kind (Type)
-import Kafka.Consumer (ConsumerGroupId, ConsumerProperties, ConsumerRecord (ConsumerRecord), KafkaConsumer, KafkaError (KafkaError, KafkaResponseError), OffsetReset (Earliest), RdKafkaRespErrT (RdKafkaRespErrTimedOut), Subscription, Timeout (Timeout), TopicName (TopicName), brokersList, closeConsumer, groupId, newConsumer, offsetReset, pollMessage, topics)
+import Kafka.Consumer (ConsumerGroupId, ConsumerProperties, ConsumerRecord (ConsumerRecord), KafkaConsumer, KafkaError (KafkaError, KafkaResponseError), OffsetReset (Earliest), RdKafkaRespErrT (RdKafkaRespErrTimedOut), Subscription, Timeout (Timeout), TopicName (TopicName), brokersList, closeConsumer, groupId, newConsumer, noAutoCommit, offsetReset, pollMessage, topics)
 import Kafka.Consumer.Types (ConsumerGroupId (ConsumerGroupId))
 import Kafka.Types (BrokerAddress (BrokerAddress))
 
@@ -47,6 +47,7 @@ someFunc = do
   with @KafkaConsumer
     ( brokersList [BrokerAddress "localhost:9092"]
         <> groupId (ConsumerGroupId "script")
+        <> noAutoCommit
     )
     ( topics [TopicName "foo"]
         <> offsetReset Earliest
