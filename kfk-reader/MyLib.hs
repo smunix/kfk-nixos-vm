@@ -54,7 +54,7 @@ someFunc = do
     \consumer -> forever do
       pollMessage consumer (Timeout 1000)
         >>= \case
-          Left (KafkaResponseError RdKafkaRespErrTimedOut) -> return ()
+          Left e@(KafkaResponseError RdKafkaRespErrTimedOut) -> print e
           Left e -> throwIO e
           Right cr@ConsumerRecord {..} -> print cr
   putStrLn "someFunc"
