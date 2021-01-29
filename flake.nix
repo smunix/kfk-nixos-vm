@@ -21,20 +21,40 @@
                     h.hw-kafka-client
                     h.cabal-install
                   ]);
-                  script = runCommand "haskell-script" {} ''
+                  cabal-conf = writeText "cabal-conf" ''
+                    -- repository hackage.haskell.org
+                      -- url: http://hackage.haskell.org/
+                      -- secure: True
+                      -- root-keys:
+                      -- key-threshold: 3
+                  '';
+                  script = runCommand "kfk-sender-script" {} ''
                     mkdir -pv $out/bin
+                    mkdir -pv $out/.cabal
+                    cp ${cabal-conf} $out/.cabal/config
+                    mkdir -pv $out/dist
                     cd ${kfk-sender-drv.src}
-                    ls -lh .
+                    echo "${ghc}/bin/cabal --config-file=$out/.cabal/config build --cabal-file=${kfk-sender-drv.src}/kfk-sender.cabal --prefix=$out --builddir=$out/dist --with-compiler=${ghc}/bin/ghc exe:kfk-sender"
+                    ${ghc}/bin/cabal --config-file=$out/.cabal/config build --cabal-file=${kfk-sender-drv.src}/kfk-sender.cabal --prefix=$out --builddir=$out/dist --with-compiler=${ghc}/bin/ghc exe:kfk-sender
                   '';
               in {
                 networking.firewall.allowedTCPPorts = [ 9092 ];
                 
                 environment.systemPackages = [
-                  cabal-install
                   rdkafka
                   kfk-sender-drv
-                  script
+                  # script
                 ];
+
+                services = {
+                  zookeeper.enable = true;
+                  apache-kafka = {
+                    enable = true;
+                    extraProperties = ''
+                      offsets.topic.replication.factor=1
+                    '';
+                  };
+                };
                 
                 users = {
                   mutableUsers = false;
